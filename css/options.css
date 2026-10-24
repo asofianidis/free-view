@@ -115,8 +115,8 @@ table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
 td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 .num { text-align: right; font-variant-numeric: tabular-nums; }
-.stats td:first-child { display: flex; align-items: center; gap: 8px; max-width: 320px; }
-.stats td:first-child span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dial-name { display: flex; align-items: center; gap: 8px; max-width: 320px; }
+.dial-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .stats img { width: 16px; height: 16px; }
 .spark { display: flex; align-items: flex-end; gap: 1px; height: 22px; width: 140px; }
 .spark i { flex: 1; background: var(--accent); border-radius: 1px; min-height: 1px; opacity: 0.85; }

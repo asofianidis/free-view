@@ -70,7 +70,7 @@ FreeView is a Manifest V3 extension with no build step.
 
 ## Privacy
 
-All data is stored locally in your browser. Nothing is sent anywhere, except:
+See the full [privacy policy](PRIVACY.md). All data is stored locally in your browser. Nothing is sent anywhere, except:
 - when sync is on, your dials and settings go through your browser's built-in sync storage;
 - the "Photo of the day" background loads images from picsum.photos;
 - a Google Font, if you choose one, loads from fonts.googleapis.com.

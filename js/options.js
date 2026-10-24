@@ -358,10 +358,12 @@ async function renderStats() {
   body.replaceChildren(...rows.map(({ d, s, visits }) => {
     const tr = el('tr');
     const name = el('td');
+    const nameWrap = el('div', 'dial-name');
     const img = el('img');
     img.src = S.faviconUrl(d.url, 32);
     img.alt = '';
-    name.append(img, el('span', '', d.title));
+    nameWrap.append(img, el('span', '', d.title));
+    name.append(nameWrap);
     name.title = d.url;
     const spark = el('div', 'spark');
     const series = keys.map((k) => s.days[k] || 0);

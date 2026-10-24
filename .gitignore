@@ -1,3 +1,6 @@
+dist/
+store/
+scripts/
 *.zip
 *.crx
 *.pem
