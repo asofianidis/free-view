@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "FreeView - Visual Speed Dial",
+  "short_name": "FreeView",
+  "version": "1.0.0",
+  "description": "A fast, beautiful and completely free visual speed dial for your new tab: groups, thumbnails, themes, sync, sidebar and analytics.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Add to FreeView",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "contextMenus",
+    "bookmarks",
+    "topSites",
+    "sessions",
+    "history",
+    "favicon",
+    "alarms",
+    "search"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+Shift+D" },
+      "description": "Open the FreeView popup"
+    },
+    "add-current-page": {
+      "suggested_key": { "default": "Alt+Shift+A" },
+      "description": "Add the current page to FreeView"
+    }
+  }
+}

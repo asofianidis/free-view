@@ -1,0 +1,146 @@
+:root {
+  --accent: #4f8cff;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --surface: rgba(24, 27, 36, 0.92);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #eef1f7;
+  --muted: #9aa3b5;
+  --danger: #e5484d;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --surface: rgba(255, 255, 255, 0.95);
+  --surface-2: rgba(0, 0, 0, 0.05);
+  --border: rgba(0, 0, 0, 0.12);
+  --text: #1c2130;
+  --muted: #5d6578;
+  --shadow: 0 10px 30px rgba(20, 30, 60, 0.18);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme="auto"] {
+    --surface: rgba(255, 255, 255, 0.95);
+    --surface-2: rgba(0, 0, 0, 0.05);
+    --border: rgba(0, 0, 0, 0.12);
+    --text: #1c2130;
+    --muted: #5d6578;
+    --shadow: 0 10px 30px rgba(20, 30, 60, 0.18);
+    color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; height: 100%; }
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: #12151d;
+}
+
+:root[data-theme="light"] body { background: #eef1f6; }
+
+svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+
+[hidden] { display: none !important; }
+
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.error { color: var(--danger); }
+.spacer { flex: 1; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { filter: brightness(1.1); }
+.btn.danger { color: var(--danger); }
+.btn.danger:hover { border-color: var(--danger); }
+.btn.small { padding: 5px 10px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"]),
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+select option { background: #222; color: #eee; }
+:root[data-theme="light"] select option { background: #fff; color: #111; }
+
+input[type="color"] {
+  width: 38px;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"] { accent-color: var(--accent); width: 100%; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+
+label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--muted); }
+label.check { flex-direction: row; align-items: center; gap: 8px; color: var(--text); font-size: 13px; }
+
+.modal {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  width: min(720px, calc(100vw - 32px));
+  backdrop-filter: blur(16px);
+}
+.modal::backdrop { background: rgba(0, 0, 0, 0.45); }
+.modal form { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.modal h2 { margin: 0; font-size: 18px; font-weight: 600; }
+.small-modal { width: min(380px, calc(100vw - 32px)); }
+.modal-actions { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 100;
+  font-size: 13px;
+}
+.toast button { background: none; border: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }

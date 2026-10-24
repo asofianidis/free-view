@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Tab</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/newtab.css">
+  <style id="customCss"></style>
+</head>
+<body class="loading">
+  <div id="bg"></div>
+  <div id="bgDim"></div>
+
+  <!-- Lock screen -->
+  <form id="lock" class="lock" hidden>
+    <div class="lock-card">
+      <svg viewBox="0 0 24 24" class="lock-icon"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4Z"/></svg>
+      <h1>FreeView is locked</h1>
+      <input id="lockInput" type="password" placeholder="Password" autocomplete="current-password" autofocus>
+      <button class="btn primary" type="submit">Unlock</button>
+      <p id="lockError" class="error" hidden>Wrong password</p>
+    </div>
+  </form>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar" aria-label="Sidebar">
+    <div class="sb-tabs" role="tablist">
+      <button data-tab="bookmarks" title="Bookmarks"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg></button>
+      <button data-tab="top" title="Most visited"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8v6h2V3h-10v2h6l-6 6-4-4-8 8z"/></svg></button>
+      <button data-tab="closed" title="Recently closed"><svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l4 4 4-4H6a7 7 0 1 1 2.05 4.95l-1.41 1.41A9 9 0 1 0 13 3Zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8Z"/></svg></button>
+      <button data-tab="history" title="History"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7Z"/></svg></button>
+      <button data-tab="tabs" title="Open tabs"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm2 0v3h14V5Zm0 5v9h14v-9Z"/></svg></button>
+      <button data-tab="apps" title="Browser pages"><svg viewBox="0 0 24 24"><path d="M4 4h4v4H4Zm6 0h4v4h-4Zm6 0h4v4h-4ZM4 10h4v4H4Zm6 0h4v4h-4Zm6 0h4v4h-4ZM4 16h4v4H4Zm6 0h4v4h-4Zm6 0h4v4h-4Z"/></svg></button>
+    </div>
+    <div class="sb-body">
+      <input id="sbSearch" class="sb-search" type="search" placeholder="Filter…">
+      <div id="sbContent" class="sb-content"></div>
+      <p class="sb-hint">Drag any item onto the grid to add it as a dial.</p>
+    </div>
+  </aside>
+
+  <main id="app" hidden>
+    <header id="header">
+      <div id="clock" class="clock" hidden>
+        <div id="clockTime" class="clock-time"></div>
+        <div id="clockDate" class="clock-date"></div>
+      </div>
+      <form id="search" class="search" hidden>
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5Zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14Z"/></svg>
+        <input id="searchInput" type="search" placeholder="Search the web or type a URL" autocomplete="off">
+      </form>
+    </header>
+
+    <nav id="groups" class="groups" aria-label="Groups"></nav>
+    <section id="grid" class="grid" aria-label="Speed dials"></section>
+    <p id="empty" class="empty" hidden>This group is empty. Click <strong>+</strong> to add a dial, or drag a link here.</p>
+  </main>
+
+  <div class="toolbar" id="toolbar">
+    <button id="btnSidebar" title="Sidebar (B)"><svg viewBox="0 0 24 24"><path d="M3 4h18v16H3Zm2 2v12h4V6Zm6 0v12h8V6Z"/></svg></button>
+    <button id="btnAdd" title="Add dial (N)"><svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6Z"/></svg></button>
+    <button id="btnLock" title="Lock now" hidden><svg viewBox="0 0 24 24"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4Z"/></svg></button>
+    <button id="btnSettings" title="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.3 7.3 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.3 7.3 0 0 0 1.7 1L11 21h4l.4-2.9a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.5ZM13 15.5a3.5 3.5 0 1 1 3.5-3.5 3.5 3.5 0 0 1-3.5 3.5Z"/></svg></button>
+  </div>
+
+  <div id="menu" class="menu" role="menu" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+
+  <!-- Dial editor -->
+  <dialog id="dialEditor" class="modal">
+    <form method="dialog" id="dialForm">
+      <h2 id="dialFormTitle">Add dial</h2>
+      <div class="editor">
+        <div class="editor-fields">
+          <label>URL <input name="url" required placeholder="example.com" autocomplete="off"></label>
+          <label>Title <input name="title" placeholder="Leave blank to use the site name"></label>
+          <label>Group <select name="groupId"></select></label>
+          <fieldset class="seg">
+            <legend>Thumbnail</legend>
+            <label><input type="radio" name="thumbMode" value="auto" checked> Screenshot</label>
+            <label><input type="radio" name="thumbMode" value="logo"> Logo</label>
+            <label><input type="radio" name="thumbMode" value="image"> Image</label>
+            <label><input type="radio" name="thumbMode" value="color"> Text</label>
+          </fieldset>
+          <div class="mode-panel" data-mode="auto">
+            <p class="muted">A screenshot is taken automatically the next time you visit the page.</p>
+            <button type="button" class="btn" id="captureNow">Capture now</button>
+          </div>
+          <div class="mode-panel" data-mode="image">
+            <label>Image URL <input name="imageUrl" placeholder="https://…/image.png"></label>
+            <label class="file-btn btn">Upload image… <input type="file" id="imageFile" accept="image/*" hidden></label>
+          </div>
+          <div class="row">
+            <label>Background <input type="color" name="bgColor"></label>
+            <label>Text color <input type="color" name="textColor" value="#ffffff"></label>
+            <button type="button" class="btn small" id="resetColors">Reset colors</button>
+          </div>
+        </div>
+        <div class="editor-preview">
+          <div class="muted small">Preview</div>
+          <div id="dialPreview"></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn danger" id="dialDelete" hidden>Delete</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" value="cancel" id="dialCancel">Cancel</button>
+        <button type="submit" class="btn primary" value="save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Group editor -->
+  <dialog id="groupEditor" class="modal small-modal">
+    <form method="dialog" id="groupForm">
+      <h2 id="groupFormTitle">New group</h2>
+      <label>Name <input name="name" required maxlength="40"></label>
+      <label>Color <input type="color" name="color" value="#4f8cff"></label>
+      <label class="check"><input type="checkbox" name="noColor" checked> No color</label>
+      <div class="modal-actions">
+        <span class="spacer"></span>
+        <button type="button" class="btn" id="groupCancel">Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/newtab.js"></script>
+</body>
+</html>

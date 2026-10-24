@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FreeView Settings</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/options.css">
+</head>
+<body>
+  <form id="lock" class="lock" hidden>
+    <div class="card lock-card">
+      <h1>Settings are locked</h1>
+      <input id="lockInput" type="password" placeholder="Password" autofocus>
+      <button class="btn primary" type="submit">Unlock</button>
+      <p id="lockError" class="error" hidden>Wrong password</p>
+    </div>
+  </form>
+
+  <div class="layout" id="layout" hidden>
+    <nav class="nav">
+      <div class="brand"><img src="icons/icon48.png" alt=""> FreeView</div>
+      <a href="#themes" class="active">Themes</a>
+      <a href="#appearance">Appearance</a>
+      <a href="#background">Background</a>
+      <a href="#layout-dials">Layout &amp; dials</a>
+      <a href="#header-sec">Search &amp; clock</a>
+      <a href="#behavior">Behavior</a>
+      <a href="#sidebar">Sidebar</a>
+      <a href="#groups">Groups</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#privacy">Privacy &amp; lock</a>
+      <a href="#sync">Sync &amp; backup</a>
+      <a href="#advanced">Custom CSS</a>
+      <a href="#shortcuts">Shortcuts</a>
+      <a href="#about">About</a>
+      <div class="nav-foot"><button class="btn primary" id="openNewtab">Open new tab</button></div>
+    </nav>
+
+    <main class="content">
+      <section id="themes">
+        <h2>Themes</h2>
+        <p class="muted">Apply a complete look in one click, then fine-tune it below.</p>
+        <div class="themes" id="themeList"></div>
+      </section>
+
+      <section id="appearance">
+        <h2>Appearance</h2>
+        <div class="card grid2">
+          <label>Color mode
+            <select data-setting="theme">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="auto">Match system</option>
+            </select>
+          </label>
+          <label>Accent color <input type="color" data-setting="accent"></label>
+          <label>Font <select data-setting="fontFamily" id="fontSelect"></select></label>
+          <label>Google Font (optional) <input data-setting="googleFont" placeholder="e.g. Inter, Poppins, Lato" data-lazy></label>
+          <label>Title size <span class="range"><input type="range" min="10" max="22" data-setting="fontSize"><output></output></span></label>
+          <div class="field">
+            <label>Text color <input type="color" data-setting="textColor" data-empty="#ffffff"></label>
+            <button type="button" class="btn small" data-clear="textColor">Use default</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="background">
+        <h2>Background</h2>
+        <div class="card">
+          <div class="seg-row" id="bgTypes">
+            <label><input type="radio" name="bgType" data-setting="bgType" value="none"> None</label>
+            <label><input type="radio" name="bgType" data-setting="bgType" value="color"> Color</label>
+            <label><input type="radio" name="bgType" data-setting="bgType" value="gradient"> Gradient</label>
+            <label><input type="radio" name="bgType" data-setting="bgType" value="image"> My image</label>
+            <label><input type="radio" name="bgType" data-setting="bgType" value="url"> Image URL</label>
+            <label><input type="radio" name="bgType" data-setting="bgType" value="daily"> Photo of the day</label>
+          </div>
+          <div class="bg-panel" data-bg="color"><label>Color <input type="color" data-setting="bgColor"></label></div>
+          <div class="bg-panel" data-bg="gradient">
+            <div class="swatches" id="gradients"></div>
+            <label>Custom CSS gradient <input data-setting="bgGradient" data-lazy></label>
+          </div>
+          <div class="bg-panel" data-bg="image">
+            <div class="bg-upload">
+              <div class="bg-thumb" id="bgThumb"></div>
+              <div class="stack">
+                <label class="btn file">Upload image… <input type="file" id="bgFile" accept="image/*" hidden></label>
+                <button type="button" class="btn danger small" id="bgRemove">Remove image</button>
+              </div>
+            </div>
+          </div>
+          <div class="bg-panel" data-bg="url"><label>Image URL <input data-setting="bgUrl" placeholder="https://…/wallpaper.jpg" data-lazy></label></div>
+          <div class="bg-panel" data-bg="daily"><p class="muted small">A new random photo every day, served by picsum.photos.</p></div>
+          <div class="grid2">
+            <label>Image sizing
+              <select data-setting="bgSize">
+                <option value="cover">Fill screen</option>
+                <option value="contain">Fit</option>
+                <option value="tile">Tile</option>
+              </select>
+            </label>
+            <label>Blur <span class="range"><input type="range" min="0" max="30" data-setting="bgBlur"><output></output></span></label>
+            <label>Darken <span class="range"><input type="range" min="0" max="0.8" step="0.05" data-setting="bgDim"><output></output></span></label>
+          </div>
+        </div>
+      </section>
+
+      <section id="layout-dials">
+        <h2>Layout &amp; dials</h2>
+        <div class="card grid2">
+          <label>Dial style
+            <select data-setting="dialStyle">
+              <option value="thumbnail">Screenshot thumbnails</option>
+              <option value="logo">Logos</option>
+              <option value="compact">Compact list</option>
+            </select>
+          </label>
+          <label>Titles
+            <select data-setting="titlePosition">
+              <option value="below">Below dial</option>
+              <option value="overlay">Over dial</option>
+              <option value="hidden">Hidden</option>
+            </select>
+          </label>
+          <label>Columns (0 = automatic) <span class="range"><input type="range" min="0" max="12" data-setting="columns"><output></output></span></label>
+          <label>Dial width <span class="range"><input type="range" min="100" max="420" step="5" data-setting="dialWidth"><output></output></span></label>
+          <label>Dial shape
+            <select data-setting="dialRatio">
+              <option value="16 / 10">Widescreen 16:10</option>
+              <option value="16 / 9">Wide 16:9</option>
+              <option value="4 / 3">Classic 4:3</option>
+              <option value="1 / 1">Square</option>
+              <option value="3 / 4">Portrait</option>
+            </select>
+          </label>
+          <label>Spacing <span class="range"><input type="range" min="0" max="60" data-setting="gap"><output></output></span></label>
+          <label>Corner radius <span class="range"><input type="range" min="0" max="40" data-setting="radius"><output></output></span></label>
+          <label>Dial opacity <span class="range"><input type="range" min="0.3" max="1" step="0.05" data-setting="dialOpacity"><output></output></span></label>
+          <label>Max page width <span class="range"><input type="range" min="600" max="2600" step="50" data-setting="maxWidth"><output></output></span></label>
+          <label>Hover effect
+            <select data-setting="hoverEffect">
+              <option value="lift">Lift</option>
+              <option value="zoom">Zoom</option>
+              <option value="none">None</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" data-setting="dialShadow"> Drop shadows</label>
+          <label class="check"><input type="checkbox" data-setting="verticalCenter"> Center vertically</label>
+          <label class="check"><input type="checkbox" data-setting="showAddTile"> Show “+” tile</label>
+          <label class="check"><input type="checkbox" data-setting="showGroups"> Show group tabs</label>
+        </div>
+      </section>
+
+      <section id="header-sec">
+        <h2>Search &amp; clock</h2>
+        <div class="card grid2">
+          <label class="check"><input type="checkbox" data-setting="showSearch"> Show search box</label>
+          <label>Search engine <select data-setting="searchEngine" id="engineSelect"></select></label>
+          <label class="span2" id="customEngine">Custom search URL (use %s for the query) <input data-setting="customSearchUrl" placeholder="https://example.com/search?q=%s" data-lazy></label>
+          <label class="check"><input type="checkbox" data-setting="showClock"> Show clock</label>
+          <label class="check"><input type="checkbox" data-setting="clock24"> 24-hour clock</label>
+          <label class="check"><input type="checkbox" data-setting="showDate"> Show date</label>
+        </div>
+      </section>
+
+      <section id="behavior">
+        <h2>Behavior</h2>
+        <div class="card grid2">
+          <label>Open dials in
+            <select data-setting="openIn">
+              <option value="current">Current tab</option>
+              <option value="new">New tab</option>
+              <option value="background">Background tab</option>
+              <option value="window">New window</option>
+            </select>
+          </label>
+          <label>Refresh screenshots after (days) <span class="range"><input type="range" min="1" max="60" data-setting="thumbMaxAgeDays"><output></output></span></label>
+          <label class="check"><input type="checkbox" data-setting="autoThumbnails"> Capture screenshots automatically when visiting a dial's page</label>
+          <label class="check"><input type="checkbox" data-setting="captureOnAdd"> Capture a screenshot immediately when adding a dial</label>
+          <label class="check"><input type="checkbox" data-setting="rememberGroup"> Reopen the last used group</label>
+          <label class="check"><input type="checkbox" data-setting="shortcuts"> Enable keyboard shortcuts</label>
+          <label class="check"><input type="checkbox" data-setting="confirmDelete"> Confirm before deleting a dial</label>
+          <label class="check"><input type="checkbox" data-setting="trackVisits"> Count visits for analytics</label>
+        </div>
+      </section>
+
+      <section id="sidebar">
+        <h2>Sidebar</h2>
+        <div class="card grid2">
+          <label class="check"><input type="checkbox" data-setting="sidebarEnabled"> Enable sidebar (bookmarks, most visited, recently closed, history, open tabs)</label>
+          <label>Position
+            <select data-setting="sidebarSide">
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" data-setting="sidebarHover"> Open when the mouse touches the screen edge</label>
+        </div>
+      </section>
+
+      <section id="groups">
+        <h2>Groups</h2>
+        <div class="card">
+          <div id="groupList" class="list"></div>
+          <div class="row">
+            <input id="newGroupName" placeholder="New group name">
+            <button class="btn" id="addGroup">Add group</button>
+          </div>
+          <h3>Import</h3>
+          <div class="row">
+            <select id="bookmarkFolder"></select>
+            <button class="btn" id="importFolder">Import bookmark folder as group</button>
+          </div>
+          <div class="row">
+            <button class="btn" id="importTop">Add most visited sites to current default group</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="analytics">
+        <h2>Analytics</h2>
+        <div class="card">
+          <div class="stats-summary" id="statsSummary"></div>
+          <div class="row">
+            <select id="statsRange">
+              <option value="7">Last 7 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="90">Last 90 days</option>
+              <option value="all">All time</option>
+            </select>
+            <span class="spacer"></span>
+            <button class="btn danger small" id="resetStats">Reset statistics</button>
+          </div>
+          <table class="stats">
+            <thead><tr><th>Dial</th><th>Group</th><th class="num">Visits</th><th>Activity</th><th>Last visit</th></tr></thead>
+            <tbody id="statsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy &amp; lock</h2>
+        <div class="card">
+          <p class="muted small">Protect your dials and settings with a password. This is a privacy screen to stop casual viewing; your data on disk is not encrypted.</p>
+          <div id="lockOff">
+            <div class="grid2">
+              <label>Password <input type="password" id="pw1" autocomplete="new-password"></label>
+              <label>Repeat password <input type="password" id="pw2" autocomplete="new-password"></label>
+            </div>
+            <div class="row"><button class="btn primary" id="setPw">Enable lock</button><span id="pwMsg" class="small"></span></div>
+          </div>
+          <div id="lockOn" hidden>
+            <p>The lock is <strong>on</strong>.</p>
+            <label>Ask for the password again after
+              <select data-setting="lockTimeoutMin">
+                <option value="0">Browser restart</option>
+                <option value="5">5 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="240">4 hours</option>
+              </select>
+            </label>
+            <div class="row">
+              <button class="btn" id="changePw">Change password</button>
+              <button class="btn danger" id="removePw">Remove lock</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sync">
+        <h2>Sync &amp; backup</h2>
+        <div class="card">
+          <h3>Sync across devices</h3>
+          <p class="muted small">Uses your browser's built-in sync (sign in to the browser with sync turned on). Dials, groups and settings are synced; screenshots and uploaded images stay on each device.</p>
+          <label class="check"><input type="checkbox" data-setting="syncEnabled" id="syncToggle"> Enable sync</label>
+          <div class="row">
+            <button class="btn" id="syncNow">Sync now</button>
+            <button class="btn" id="syncPull">Replace local with synced copy</button>
+            <button class="btn" id="syncPush">Overwrite synced copy</button>
+          </div>
+          <p id="syncStatus" class="small muted"></p>
+
+          <h3>Export &amp; import</h3>
+          <div class="row">
+            <label class="check"><input type="checkbox" id="exportThumbs" checked> Include screenshots &amp; images</label>
+            <button class="btn" id="exportBtn">Export to file</button>
+          </div>
+          <div class="row">
+            <label class="btn file">Import from file… <input type="file" id="importFile" accept="application/json,.json" hidden></label>
+            <label class="check"><input type="checkbox" id="importMerge"> Merge with my current dials instead of replacing them</label>
+          </div>
+
+          <h3>Automatic backups</h3>
+          <div class="grid2">
+            <label class="check"><input type="checkbox" data-setting="autoBackup"> Back up automatically every day</label>
+            <label>Keep <span class="range"><input type="range" min="1" max="30" data-setting="backupKeep"><output></output></span></label>
+          </div>
+          <div class="row"><button class="btn" id="backupNow">Back up now</button></div>
+          <div id="backupList" class="list"></div>
+
+          <h3>Reset</h3>
+          <div class="row">
+            <button class="btn danger" id="resetSettings">Reset settings to defaults</button>
+            <button class="btn danger" id="resetAll">Delete all dials and settings</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="advanced">
+        <h2>Custom CSS</h2>
+        <div class="card">
+          <p class="muted small">Styles added here are applied to your new tab page. Useful selectors: <code>.dial</code>, <code>.thumb</code>, <code>.title</code>, <code>.group</code>, <code>.search</code>, <code>.clock</code>, <code>#bg</code>.</p>
+          <textarea id="cssInput" rows="12" spellcheck="false" placeholder=".dial .title { font-weight: 600; }"></textarea>
+          <div class="row"><button class="btn primary" id="cssSave">Apply CSS</button><span id="cssMsg" class="small muted"></span></div>
+        </div>
+      </section>
+
+      <section id="shortcuts">
+        <h2>Keyboard shortcuts</h2>
+        <div class="card">
+          <table class="keys">
+            <tr><td><kbd>1</kbd> … <kbd>9</kbd>, <kbd>0</kbd></td><td>Open dial 1–10 of the current group (hold <kbd>Shift</kbd> for a background tab)</td></tr>
+            <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>Previous / next group</td></tr>
+            <tr><td><kbd>/</kbd></td><td>Focus the search box</td></tr>
+            <tr><td><kbd>N</kbd></td><td>Add a dial</td></tr>
+            <tr><td><kbd>G</kbd></td><td>Add a group</td></tr>
+            <tr><td><kbd>B</kbd></td><td>Toggle the sidebar</td></tr>
+            <tr><td><kbd>L</kbd></td><td>Lock (when a password is set)</td></tr>
+            <tr><td><kbd>Ctrl</kbd>/<kbd>Middle</kbd> click</td><td>Open dial in a background tab</td></tr>
+            <tr><td><kbd>Shift</kbd> click</td><td>Open dial in a new window</td></tr>
+            <tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></td><td>Add the current page from any tab</td></tr>
+            <tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td>Open the add-dial popup</td></tr>
+          </table>
+          <p class="muted small">Browser-wide shortcuts can be changed at <a href="#" id="shortcutLink">chrome://extensions/shortcuts</a>.</p>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <div class="card">
+          <p><strong>FreeView</strong> <span id="version"></span> — a visual speed dial that is free forever. Every feature is included, there are no accounts, ads or paid tiers, and your data never leaves your browser except through your own browser sync.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="js/options.js"></script>
+</body>
+</html>
